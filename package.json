@@ -1,14 +1,22 @@
 {
-  "name": "VoiceLogBot for Discord",
+  "name": "voicelogbot",
   "version": "1.0.0",
-  "description": "A Discord bot that logs any movement in voice channels to a specified channel",
+  "description": "A discord bot that logs basic movement in voice channels using node.js and discord.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Inge Dalby",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JanEricWalther/VoiceLogBot.git"
+  },
+  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JanEricWalther/VoiceLogBot/issues"
+  },
+  "homepage": "https://github.com/JanEricWalther/VoiceLogBot#readme",
   "dependencies": {
-    "discord.js": "^11.0.0"
+    "discord.js": "^11.5.1"
   }
 }

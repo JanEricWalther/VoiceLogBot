@@ -7,8 +7,10 @@ let data = null;
 let token = "";
 let voiceLogChannel = "";
 let prefix = "";
+let botName = ""; 
 
 client.on('ready', () => {
+  client.user.username = botName;
 	console.log(`Logged in as ${client.user.username}!`);
 	updateChannels();
 	setLogChannel(data.voiceLogChannel);
@@ -27,11 +29,11 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 	let newChannelName = (newVCID != null && typeof newVCID != undefined) ? channels.get(newVCID).name : null;
 	
 	if (oldChannelName === null)
-		voiceLogChannel.sendMessage(`${username} connected to voice and joined ${newChannelName}`);
+		voiceLogChannel.send(`${username} connected to voice and joined ${newChannelName}`);
 	else if (newChannelName === null)
-		voiceLogChannel.sendMessage(`${username} disconnected`);
+		voiceLogChannel.send(`${username} disconnected`);
 	else
-		voiceLogChannel.sendMessage(`${username} moved to ${newChannelName}`);
+		voiceLogChannel.send(`${username} moved to ${newChannelName}`);
 });
 
 client.on('channelCreate', (channel) => {
@@ -63,7 +65,7 @@ client.on('message', (message) => {
 				writedata();
 				break;
 			default:
-				message.channel.sendMessage("Sorry, I don't recognize that command T_T.");
+				message.channel.send("Sorry, I don't recognize that command T_T.");
 		}
 	}
 });
@@ -71,7 +73,8 @@ client.on('message', (message) => {
 let readdata = function () {
 	data = JSON.parse(fs.readFileSync("data.json"));
 	token = data.token;
-	prefix = data.prefix;
+  prefix = data.prefix;
+  botName = data.botName;
 }
 
 let writedata = function () {
@@ -91,18 +94,18 @@ let setLogChannel = function (channel, msgChannel) {
 	if (typeof voiceLogChannel === 'undefined')
 		return;
 	else if (typeof voiceLogChannel === 'undefined' && msgChannel) {
-		msgChannel.sendMessage(`Couldn't find channel '${channel}'`);
+		msgChannel.send(`Couldn't find channel '${channel}'`);
 		return;
 	}
 	else if (voiceLogChannel.type === 'voice' && msgChannel) {
-		msgChannel.sendMessage(`Can only log to text channels`);
+		msgChannel.send(`Can only log to text channels`);
 		return;
 	}
 
 	data.voiceLogChannel = channel;
 
 	if (msgChannel)
-		msgChannel.sendMessage(`Channel for logging set to '${channel}'`);
+		msgChannel.send(`Channel for logging set to '${channel}'`);
 }
 
 readdata();
