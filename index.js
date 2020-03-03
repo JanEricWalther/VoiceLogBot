@@ -27,13 +27,15 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
 	let oldChannelName = (oldVCID != null && typeof oldVCID != undefined) ? channels.get(oldVCID).name : null;
 	let newChannelName = (newVCID != null && typeof newVCID != undefined) ? channels.get(newVCID).name : null;
-	
-	if (oldChannelName === null)
-		voiceLogChannel.send(`${username} connected to voice and joined ${newChannelName}`);
+  
+  if (oldChannelName === newChannelName)
+    return;
+	else if (oldChannelName === null)
+		voiceLogChannel.send(`**${username}** connected to voice and joined **${newChannelName}**`);
 	else if (newChannelName === null)
-		voiceLogChannel.send(`${username} disconnected`);
+		voiceLogChannel.send(`**${username}** disconnected`);
 	else
-		voiceLogChannel.send(`${username} moved to ${newChannelName}`);
+		voiceLogChannel.send(`**${username}** moved to **${newChannelName}**`);
 });
 
 client.on('channelCreate', (channel) => {
